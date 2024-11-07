@@ -21,8 +21,7 @@ from django.shortcuts import render
 from pandas_datareader import data as pdr
 from .forms import AnalyzeForm
 from django.shortcuts import redirect
-import requests
-from alpha_vantage.timeseries import TimeSeries
+
 
 
 def index(request):
@@ -88,15 +87,7 @@ def download_csv(request, stock_id):
 
 
 def get_stock_data(ticker, start_date, end_date):
-    api_key = 'YOUR_ALPHA_VANTAGE_API_KEY'  # Replace with your Alpha Vantage API key
-    ts = TimeSeries(key=api_key, output_format='pandas')
-
-    data, meta_data = ts.get_daily_adjusted(symbol=ticker, outputsize='full')
-    data = data.loc[start_date:end_date]
-
-    df = pd.DataFrame(data['4. close'])
-    df.columns = ['Adj Close']
-
+    df = pd.read_csv(StringIO(pdr.DataReader(ticker, 'yahoo', start_date, end_date)['Adj Close'].to_csv()), parse_dates=[0], index_col=0)
     return df
 
 
