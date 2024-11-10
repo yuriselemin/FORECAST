@@ -10,7 +10,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import tensorflow as tf
 from torch.nn import Sequential
-from torch.nn import Sequential
 from tensorflow.keras.layers import Dense, LSTM
 import torch
 import torch.nn as nn
