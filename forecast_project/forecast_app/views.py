@@ -98,7 +98,6 @@ def get_stock_data(ticker, start_date, end_date):
         temp_file.seek(0)
         df_from_csv = pd.read_csv(temp_file.name, parse_dates=[0], index_col=0)
 
-    # Delete the temporary file after reading it
     temp_file.close()
     os.remove(temp_file.name)
 
