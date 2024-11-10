@@ -44,10 +44,14 @@ def analyze(request):
             end_date_str = form.cleaned_data['end_date']
             model_type = form.cleaned_data['model_type']
 
+            # Проверяем, что передаются корректные значения
+            print(f"Ticker: {ticker}, Start Date: {start_date_str}, End Date: {end_date_str}")
+
             try:
                 start_date = pd.to_datetime(start_date_str)
                 end_date = pd.to_datetime(end_date_str) + timedelta(days=1)
-            except ValueError:
+            except ValueError as e:
+                print(e)
                 return HttpResponse("Invalid date format. Please use YYYY-MM-DD.")
 
             df = get_stock_data(ticker, start_date, end_date)
@@ -74,7 +78,6 @@ def analyze(request):
     else:
         form = AnalyzeForm(ticker_choices)
         return render(request, 'forecast_app/analyze.html', {'form': form})
-
 
 def download_csv(request, stock_id):
     stock = Stock.objects.get(id=stock_id)
