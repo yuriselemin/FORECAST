@@ -17,6 +17,9 @@
 #
 #     return df_from_csv
 #
+#
 # df_from_csv = get_stock_data('TSLA', '2020-01-01', '2021-12-31').to_string()
 # print(df_from_csv)
 #
+# with open('stock_data.txt', 'w') as file:
+#     file.write(df_from_csv)
