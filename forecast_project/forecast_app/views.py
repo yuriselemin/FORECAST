@@ -1,6 +1,6 @@
 from datetime import timedelta
 from decimal import Decimal
-from io import StringIO
+
 import csv
 import pandas as pd
 import numpy as np
@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import tensorflow as tf
 from torch.nn import Sequential
-from tensorflow.keras.models import Sequential
+from torch.nn import Sequential
 from tensorflow.keras.layers import Dense, LSTM
 import torch
 import torch.nn as nn
@@ -21,6 +21,8 @@ from django.shortcuts import render
 from pandas_datareader import data as pdr
 from .forms import AnalyzeForm
 from django.shortcuts import redirect
+import tempfile
+import yfinance as yf
 
 
 
@@ -87,8 +89,20 @@ def download_csv(request, stock_id):
 
 
 def get_stock_data(ticker, start_date, end_date):
-    df = pd.read_csv(StringIO(pdr.DataReader(ticker, 'yahoo', start_date, end_date)['Adj Close'].to_csv()), parse_dates=[0], index_col=0)
-    return df
+    # Загружаем данные с Yahoo Finance
+    # df = pdr.DataReader(ticker, 'yahoo', start_date, end_date)[['Adj Close']]
+    df = yf.download(ticker, start_date, end_date)[['Adj Close']]
+
+
+    # Генерируем временный CSV-файл
+    with tempfile.NamedTemporaryFile(mode='w+', suffix='.csv') as temp_file:
+        df.to_csv(temp_file.name, index=True)
+
+        # Читаем данные обратно из временного файла
+        temp_file.seek(0)
+        df_from_csv = pd.read_csv(temp_file.name, parse_dates=[0], index_col=0)
+
+    return df_from_csv
 
 
 def analyze_data(df, model_type):
@@ -97,7 +111,7 @@ def analyze_data(df, model_type):
 
     # Normalization
     scaler = MinMaxScaler(feature_range=(0, 1))
-    scaled_close_prices = scaler.fit_transform(close_prices.values.reshape(-1, 1)).reshape(-1)
+    scaled_close_prices = scaler.fit_transform(close_prices.values.reshape(-1, 1))
 
     # Split into training and testing sets
     split_index = int(len(scaled_close_prices) * 0.8)
@@ -228,7 +242,7 @@ def run_pytorch_model(train_data, test_data, train_dates, test_dates, scaler):
             h0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).requires_grad_().to(device)
             c0 = torch.zeros(self.num_layers, x.size(0), self.hidden_dim).requires_grad_().to(device)
 
-            out, _ = self.lstm(x, (h0.detach(), c0.detach()))
+            out, (hn, cn) = self.lstm(x, (h0.detach(), c0.detach()))
             out = self.fc(out[:, -1, :])
             return out
 
@@ -241,8 +255,8 @@ def run_pytorch_model(train_data, test_data, train_dates, test_dates, scaler):
     criterion = nn.MSELoss()
     optimizer = torch.optim.Adam(model.parameters())
 
-    train_dataset = TensorDataset(torch.from_numpy(train_data).float().view(-1, 1).to(device), torch.from_numpy(np.arange(len(train_data))).long().view(-1).to(device))
-    test_dataset = TensorDataset(torch.from_numpy(test_data).float().view(-1, 1).to(device), torch.from_numpy(np.arange(len(test_data)) + len(train_data)).long().view(-1).to(device))
+    train_dataset = TensorDataset(torch.from_numpy(train_data).float().view(-1, 1).to(device), torch.from_numpy(np.arange(len(train_data))).long().view(-1, 1).to(device))
+    test_dataset = TensorDataset(torch.from_numpy(test_data).float().view(-1, 1).to(device), torch.from_numpy(np.arange(len(test_data)) + len(train_data)).long().view(-1, 1).to(device))
 
     train_loader = DataLoader(train_dataset, batch_size=64, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=len(test_data), shuffle=False)

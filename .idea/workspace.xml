@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0baf2fe-5d88-4a5b-939d-fdfce4f6b312" name="Changes" comment="START">
-      <change beforePath="$PROJECT_DIR$/.idea/FORECAST.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/FORECAST.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TESTER.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,22 +14,44 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "yuriselemin"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/yuriselemin/FORECAST.git",
+    "accountId": "fd1f314d-84da-466d-afa8-0993a936a11e"
+  }
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2oUQiU5Ff3MqAZ7hj4YVEHuOXan" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.TESTER.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "YahooFinance__DB",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "F:/PYTHON/PROJECTS/DgangoMOD_19",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
@@ -66,7 +89,23 @@
       <option name="project" value="LOCAL" />
       <updated>1730922092296</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="AlfaVintage_10.11">
+      <option name="closed" value="true" />
+      <created>1731192870306</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731192870306</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Parsing_10.11">
+      <option name="closed" value="true" />
+      <created>1731192942367</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731192942367</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -82,6 +121,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="START" />
-    <option name="LAST_COMMIT_MESSAGE" value="START" />
+    <MESSAGE value="AlfaVintage_10.11" />
+    <MESSAGE value="Parsing_10.11" />
+    <option name="LAST_COMMIT_MESSAGE" value="Parsing_10.11" />
   </component>
 </project>
