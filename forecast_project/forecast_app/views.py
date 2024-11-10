@@ -1,6 +1,6 @@
 from datetime import timedelta
 from decimal import Decimal
-
+import os
 import csv
 import pandas as pd
 import numpy as np
@@ -23,6 +23,7 @@ from .forms import AnalyzeForm
 from django.shortcuts import redirect
 import tempfile
 import yfinance as yf
+from tempfile import NamedTemporaryFile
 
 
 
@@ -89,18 +90,17 @@ def download_csv(request, stock_id):
 
 
 def get_stock_data(ticker, start_date, end_date):
-    # Загружаем данные с Yahoo Finance
-    # df = pdr.DataReader(ticker, 'yahoo', start_date, end_date)[['Adj Close']]
     df = yf.download(ticker, start_date, end_date)[['Adj Close']]
 
-
-    # Генерируем временный CSV-файл
-    with tempfile.NamedTemporaryFile(mode='w+', suffix='.csv') as temp_file:
+    with NamedTemporaryFile(mode='w+', suffix='.csv', delete=False) as temp_file:
         df.to_csv(temp_file.name, index=True)
 
-        # Читаем данные обратно из временного файла
         temp_file.seek(0)
         df_from_csv = pd.read_csv(temp_file.name, parse_dates=[0], index_col=0)
+
+    # Delete the temporary file after reading it
+    temp_file.close()
+    os.remove(temp_file.name)
 
     return df_from_csv
 
