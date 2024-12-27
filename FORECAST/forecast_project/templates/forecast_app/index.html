@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forecast App</title>
+</head>
+<body>
+    <h1>Welcome to Forecast App!</h1>
+    <a href="{% url 'analyze' %}">Analyze Stock</a>
+    <ul>
+        {% for stock in stocks %}
+            <li>{{ stock }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

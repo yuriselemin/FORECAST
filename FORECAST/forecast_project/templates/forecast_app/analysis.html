@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analysis Results</title>
+    <!-- Подключение Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Results for {{ stock.ticker }}</h1>
+        <p>MSE: {{ stock.mse }}</p>
+        <p>MAE: {{ stock.mae }}</p>
+
+        <div id="plot_div"></div>
+    </div>
+
+    <!-- Скрипт для отображения графика -->
+    <script>
+        var trace1 = {
+            x: {{ historical_dates|safe }},
+            y: {{ historical_prices|safe }},
+            mode: 'lines',
+            name: 'Historical Prices'
+        };
+        var trace2 = {
+            x: {{ predicted_dates|safe }},
+            y: {{ predicted_prices|safe }},
+            mode: 'lines+markers',
+            name: 'Predicted Prices'
+        };
+
+        var data = [trace1, trace2];
+        var layout = {
+            title: 'Stock Price Analysis',
+            xaxis: {
+                title: 'Date'
+            },
+            yaxis: {
+                title: 'Price'
+            }
+        };
+
+        Plotly.newPlot('plot_div', data, layout);
+    </script>
+</body>
+</html>
